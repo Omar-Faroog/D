@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Preview</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* iframe */
+        iframe {
+            display: block;
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+
+        /* المربع */
+        .gray-box {
+            width: 50px;
+            height: 40px;
+            background-color: #333333;
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            z-index: 1;
+        }
+
+        /* الكرات */
+        .ball {
+            width: 20px; /* حجم الكرة */
+            height: 20px; /* حجم الكرة */
+            background-color: #3498db; /* لون الكرة */
+            border-radius: 50%;
+            position: absolute;
+            animation: fly var(--ball-speed) linear forwards;
+        }
+
+        /* حركة الكرات */
+        @keyframes fly {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(0, calc(100vh)); /* تتحرك الكرة للأسفل */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- المربع الذي تظهر منه الكرات -->
+    <div id="grayBox" class="gray-box"></div>
+
+    <!-- iframe للموقع -->
+    <iframe id="siteIframe" src="https://previewer.adalo.com/4e06590f-4b13-4d4e-a72e-c3e78f649c95" allowfullscreen></iframe>
+
+    <script>
+        var iframe = document.getElementById( siteIframe );
+        var grayBox = document.getElementById( grayBox );
+        var ballInterval;
+
+        // سرعة الكرات (كلما زادت القيمة زادت السرعة)
+        var ballSpeed = 4; // الزمن الذي تستغرقه الكرة في الطيران (بالثواني)
+
+        // وظيفة لإنشاء كرات عشوائية
+        function createBall() {
+            var ball = document.createElement( div );
+            ball.classList.add( ball );
+            ball.style.setProperty( --ball-speed , ballSpeed +  s ); // التحكم بسرعة الكرات
+            
+            // تحديد موضع الكرة عند ظهورها
+            ball.style.left =  0px ; // تبدأ من الجانب الأيسر
+            ball.style.top =  0px ; // تبدأ من أعلى الصفحة
+
+            // إضافة الكرة إلى الصفحة
+            document.body.appendChild(ball);
+
+            // إزالة الكرة بعد انتهاء الحركة
+            setTimeout(function() {
+                ball.remove();
+            }, ballSpeed * 1000); // إزالة الكرة بعد انتهاء المدة المحددة
+        }
+
+        // بدء إنشاء الكرات بشكل متكرر
+        function startBallCreation() {
+            ballInterval = setInterval(createBall, 200); // إنشاء كرة جديدة كل 200 مللي ثانية
+        }
+
+        // إيقاف الكرات عند تحميل الصفحة
+        iframe.onload = function() {
+            clearInterval(ballInterval); // إيقاف الكرات عند تحميل الصفحة
+        };
+
+        // بدء الكرات عند تحميل الصفحة
+        startBallCreation();
+    </script>
+
+</body>
+</html>
